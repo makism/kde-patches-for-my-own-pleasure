@@ -1,0 +1,39 @@
+--- kde-runtime-4.7.0.orig/activitymanager/ActivityManager.cpp	2011-05-20 23:32:25.000000000 +0300
++++ kde-runtime-4.7.0/activitymanager/ActivityManager.cpp	2011-08-15 17:08:50.000000000 +0300
+@@ -175,6 +175,11 @@ void ActivityManagerPrivate::setActivity
+     }
+ }
+ 
++KConfigGroup ActivityManagerPrivate::activitiesDesktopsConfig()
++{
++    return KConfigGroup(&config, "activitiesDesktops");
++}
++
+ KConfigGroup ActivityManagerPrivate::activitiesConfig()
+ {
+     return KConfigGroup(&config, "activities");
+@@ -207,14 +212,23 @@ bool ActivityManagerPrivate::setCurrentA
+         if (!activities.contains(id)) {
+             return false;
+         }
++        
++        activitiesDesktopsConfig().writeEntry(currentActivity, QString::number(KWindowSystem::currentDesktop()));
+ 
+         q->StartActivity(id);
+ 
+         currentActivity = id;
+         mainConfig().writeEntry("currentActivity", id);
+-
++        
+         scheduleConfigSync();
+     }
++    
++    if (activitiesDesktopsConfig().hasKey(id)) {
++        int desktopId = activitiesDesktopsConfig().readEntry(id).toInt();
++        
++        if (desktopId < KWindowSystem::numberOfDesktops())
++            KWindowSystem::setCurrentDesktop(desktopId);
++    }
+ 
+     emit q->CurrentActivityChanged(id);
+     return true;
