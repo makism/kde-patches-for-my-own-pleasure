@@ -1,0 +1,33 @@
+--- kde-workspace-4.7.3/kwin/workspace.cpp	2011-09-26 12:39:18.000000000 +0300
++++ kde-workspace-4.7.3.modified/kwin/workspace.cpp	2011-11-19 09:03:26.000000000 +0200
+@@ -101,6 +101,8 @@ Workspace::Workspace(bool restore)
+     , desktopGridSize_(1, 2)   // Default to two rows
+     , desktopGrid_(new int[2])
+     , currentDesktop_(0)
++    , previousDesktop_(0)
++    , flagToggleDesktops(false)
+     , tilingEnabled_(false)
+     // Unsorted
+     , active_popup(NULL)
+@@ -1391,6 +1393,7 @@ bool Workspace::setCurrentDesktop(int ne
+ 
+         ObscuringWindows obs_wins;
+ 
++        previousDesktop_ = currentDesktop_; // Store the current desktop
+         currentDesktop_ = new_desktop; // Change the desktop (so that Client::updateVisibility() works)
+ 
+         for (ClientList::ConstIterator it = stacking_order.constBegin();
+@@ -1491,6 +1494,13 @@ bool Workspace::setCurrentDesktop(int ne
+     return true;
+ }
+ 
++bool Workspace::setPreviousDesktop(int i)
++{
++    previousDesktop_ = i;
++    
++    return true;
++}
++
+ /**
+  * Updates the current activity when it changes
+  * do *not* call this directly; it does not set the activity.
