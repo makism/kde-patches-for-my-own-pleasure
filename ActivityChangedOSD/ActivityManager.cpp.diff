@@ -1,0 +1,39 @@
+--- kde-runtime-4.7.3.orig/activitymanager/ActivityManager.cpp	2011-05-20 23:32:25.000000000 +0300
++++ kde-runtime-4.7.3/activitymanager/ActivityManager.cpp	2011-11-20 21:41:04.000000000 +0200
+@@ -69,11 +69,14 @@ __inline int toInt(WId wid)
+ ActivityManagerPrivate::ActivityManagerPrivate(ActivityManager * parent)
+     : haveSessions(false),
+     config("activitymanagerrc"),
++    activity_changed_osd(0),
+ #ifdef HAVE_NEPOMUK
+     m_nepomukInitCalled(false),
+ #endif
+     q(parent)
+ {
++    activity_changed_osd = new ActivityChangedOSD(parent);
++    
+     // Initializing config
+     connect(&configSyncTimer, SIGNAL(timeout()),
+              this, SLOT(configSync()));
+@@ -121,6 +124,8 @@ ActivityManagerPrivate::ActivityManagerP
+ 
+ ActivityManagerPrivate::~ActivityManagerPrivate()
+ {
++    delete activity_changed_osd;
++    
+     configSync();
+ }
+ 
+@@ -207,9 +212,11 @@ bool ActivityManagerPrivate::setCurrentA
+         if (!activities.contains(id)) {
+             return false;
+         }
+-
++        
+         q->StartActivity(id);
+ 
++        activity_changed_osd->activityChanged(id);
++        
+         currentActivity = id;
+         mainConfig().writeEntry("currentActivity", id);
+ 

@@ -1,0 +1,19 @@
+--- kde-runtime-4.7.3.orig/activitymanager/ActivityManager_p.h	2011-05-20 23:32:25.000000000 +0300
++++ kde-runtime-4.7.3/activitymanager/ActivityManager_p.h	2011-11-20 21:39:25.000000000 +0200
+@@ -29,6 +29,7 @@
+ #include <KUrl>
+ 
+ #include "ActivityManager.h"
++#include "ActivityChangedOSD.h"
+ #include "config-features.h"
+ 
+ #ifdef HAVE_NEPOMUK
+@@ -80,6 +81,8 @@ public:
+     KConfigGroup activitiesConfig();
+     KConfigGroup mainConfig();
+     QString activityName(const QString & id);
++    
++    ActivityChangedOSD* activity_changed_osd;
+ 
+ #ifdef HAVE_NEPOMUK
+     Nepomuk::Resource activityResource(const QString & id);

@@ -1,0 +1,19 @@
+ActivityChangedOSD
+
+*****************************************************************
+	This is code in testing, needs much more loving.
+*****************************************************************
+
+* For the time being, only the Activity's name is shown.
+* The code is mostly based on KWin OSD and KRunner's Quicksand.
+
+See kde bugs:
+  https://bugs.kde.org/show_bug.cgi?id=265456
+
+When changing to another activity, display in OSD
+that activity's name.
+
+Apply patches to:
+	kdelibs/kactivities/service/
+
+Kill and restart kactivitymanagerd
