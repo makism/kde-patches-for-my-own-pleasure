@@ -14,3 +14,5 @@ The problem is as follows:
 
 Apply patches to:
 	kdelibs/kactivities/service/
+
+Kill and restart kactivitymanagerd
