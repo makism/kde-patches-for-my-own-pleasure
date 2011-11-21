@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <KDE/Plasma/Theme>
 #include <KDE/Plasma/PaintUtils>
 #include <kiconloader.h>
+#include <kicon.h>
 
 //*******************************
 // ActivityChangedOSD
@@ -183,7 +184,13 @@ QRectF ActivityChangedText::boundingRect() const
 void ActivityChangedText::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     painter->setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
-    painter->drawText(boundingRect()
-                      , Qt::AlignCenter | Qt:: AlignVCenter
-                      , m_activityman->ActivityName(m_activityman->CurrentActivity()));
+    
+    KIcon icon = KIcon(m_activityman->ActivityIcon(m_activityman->CurrentActivity()));
+    icon.paint(painter, 0, 0, 32, 32);
+    
+    painter->drawText(32.0f, 32.0f
+                , m_activityman->ActivityName(m_activityman->CurrentActivity()));
+//     painter->drawText(boundingRect()
+//                       , Qt::AlignCenter | Qt:: AlignVCenter
+//                       , m_activityman->ActivityName(m_activityman->CurrentActivity()));
 }
