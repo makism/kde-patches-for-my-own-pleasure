@@ -46,6 +46,7 @@ ActivityChangedOSD::ActivityChangedOSD(ActivityManager* am)
         , m_active(false)
         , m_show(false)
         , m_delayTime(0)
+        , m_smallView(true)
 {
     setWindowFlags(Qt::X11BypassWindowManagerHint);
     setFrameStyle(QFrame::NoFrame);
@@ -86,6 +87,7 @@ void ActivityChangedOSD::reconfigure()
 void ActivityChangedOSD::activityChanged(const QString& id)
 {
     if (m_active) {
+        resize();
         update();
     } else {
         m_active = true;
@@ -126,6 +128,10 @@ void ActivityChangedOSD::resize()
 
     float width = screenRect.width() * 0.1f;
     float height = screenRect.height() * 0.1f;
+    
+    QRect r = fontMetrics().boundingRect(m_activityman->ActivityName(m_activityman->CurrentActivity()));
+    height = 32 + top + bottom;
+    width = r.width() + 32 + left + right + 4.0f + 2.0f;
 
     QRect rect = QRect(screenRect.x() + (screenRect.width() - width) / 2,
                        screenRect.y() + (screenRect.height() - height) / 2,
@@ -153,8 +159,7 @@ void ActivityChangedOSD::resize()
         ActivityChangedText* text = qgraphicsitem_cast<ActivityChangedText*>(it);
         if (text) {
             text->setPos(left, top);
-            text->setWidth(width - left - right);
-            text->setHeight(fontMetrics().height());
+            text->setHeight(r.height() + top);
         }
     }
 }
@@ -188,7 +193,7 @@ void ActivityChangedText::paint(QPainter* painter, const QStyleOptionGraphicsIte
     KIcon icon = KIcon(m_activityman->ActivityIcon(m_activityman->CurrentActivity()));
     icon.paint(painter, 0, 0, 32, 32);
     
-    painter->drawText(32.0f, 32.0f
+    painter->drawText(32.0f + 4.0f, 32.0f - (boundingRect().height() / 2.0f)
                 , m_activityman->ActivityName(m_activityman->CurrentActivity()));
 //     painter->drawText(boundingRect()
 //                       , Qt::AlignCenter | Qt:: AlignVCenter

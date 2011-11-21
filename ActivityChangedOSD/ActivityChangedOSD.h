@@ -91,6 +91,7 @@ private:
     QTimer m_delayedHideTimer;
     bool m_show;
     int m_delayTime;
+    bool m_smallView;
 };
 
 // class ActivityChangedItem : public QObject, public QGraphicsItem
