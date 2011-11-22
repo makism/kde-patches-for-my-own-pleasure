@@ -84,12 +84,17 @@ protected:
 
 private:
     void resize();
+    
+private:
     ActivityManager* m_activityman;
+    
     Plasma::FrameSvg m_frame;
     Plasma::FrameSvg m_item_frame;
     QGraphicsScene* m_scene;
-    bool m_active;
+    
     QTimer m_delayedHideTimer;
+    
+    bool m_active;
     bool m_show;
     int m_delayTime;
     bool m_smallView;

@@ -151,6 +151,8 @@ void ActivityChangedOSD::resize()
         ActivityChangedItem* item = qgraphicsitem_cast<ActivityChangedItem*>(it);
         if (item) {
             item->setPos(32.0f / 2.0f, 32.0f / 2.0f);
+            item->setWidth(width);
+            item->setHeight(height);
         }
     }
 }
@@ -185,7 +187,7 @@ void ActivityChangedItem::paint(QPainter* painter, const QStyleOptionGraphicsIte
     icon.paint(painter, 0, 0, 32, 32);
 
     painter->drawText(32.0f + 4.0f
-                    ,(32.0f / 2.0f) - (boundingRect().height() / 2.0f)
+                    ,(boundingRect().height() / 2.0f) - (32.0f / 2.0f) + 4.0f
                     ,m_activityman->ActivityName(m_activityman->CurrentActivity()));
 }
 
