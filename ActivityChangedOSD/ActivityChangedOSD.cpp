@@ -64,7 +64,7 @@ ActivityChangedOSD::ActivityChangedOSD(ActivityManager* am)
 
     reconfigure();
 
-    m_scene->addItem(new ActivityChangedText(m_activityman));
+    m_scene->addItem(new ActivityChangedItem(m_activityman));
 }
 
 ActivityChangedOSD::~ActivityChangedOSD()
@@ -148,17 +148,17 @@ void ActivityChangedOSD::resize()
     }
     
     foreach (QGraphicsItem * it, m_scene->items()) {
-        ActivityChangedText* text = qgraphicsitem_cast<ActivityChangedText*>(it);
-        if (text) {
-            text->setPos(32.0f / 2.0f, 32.0f / 2.0f);
+        ActivityChangedItem* item = qgraphicsitem_cast<ActivityChangedItem*>(it);
+        if (item) {
+            item->setPos(32.0f / 2.0f, 32.0f / 2.0f);
         }
     }
 }
 
 //*******************************
-// ActivityChangedText
+// ActivityChangedItem
 //*******************************
-ActivityChangedText::ActivityChangedText(ActivityManager* am)
+ActivityChangedItem::ActivityChangedItem(ActivityManager* am)
         : QGraphicsItem()
         , m_activityman(am)
         , m_width(0.0f)
@@ -167,23 +167,25 @@ ActivityChangedText::ActivityChangedText(ActivityManager* am)
 
 }
 
-ActivityChangedText::~ActivityChangedText()
+ActivityChangedItem::~ActivityChangedItem()
 {
 
 }
 
-QRectF ActivityChangedText::boundingRect() const
+QRectF ActivityChangedItem::boundingRect() const
 {
     return QRectF(0, 0, m_width, m_height);
 }
 
-void ActivityChangedText::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+void ActivityChangedItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     painter->setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
 
     KIcon icon = KIcon(m_activityman->ActivityIcon(m_activityman->CurrentActivity()));
     icon.paint(painter, 0, 0, 32, 32);
 
-    painter->drawText(32.0f + 4.0f, (32.0f / 2.0f) - (boundingRect().height() / 2.0f) , m_activityman->ActivityName(m_activityman->CurrentActivity()));
+    painter->drawText(32.0f + 4.0f
+                    ,(32.0f / 2.0f) - (boundingRect().height() / 2.0f)
+                    ,m_activityman->ActivityName(m_activityman->CurrentActivity()));
 }
 

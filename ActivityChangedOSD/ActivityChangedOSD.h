@@ -33,11 +33,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class QGraphicsScene;
 class QPropertyAnimation;
 
-class ActivityChangedText : public QGraphicsItem
+class ActivityChangedItem : public QGraphicsItem
 {
 public:
-    ActivityChangedText(ActivityManager* am);
-    ~ActivityChangedText();
+    ActivityChangedItem(ActivityManager* am);
+    ~ActivityChangedItem();
     
     enum { Type = UserType + 2 };
     
@@ -94,18 +94,5 @@ private:
     int m_delayTime;
     bool m_smallView;
 };
-
-// class ActivityChangedItem : public QObject, public QGraphicsItem
-// {
-//     Q_OBJECT
-//     
-//     Q_INTERFACES(QGraphicsItem)
-// public:
-//     ActivityChangedItem();
-//     ~ActivityChangedItem();
-//     
-//     virtual QRectF boundingRect() const;
-//     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget);
-// };
 
 #endif // ACTIVITYCHANGEOSD_H
