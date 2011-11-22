@@ -21,15 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "ActivityChangedOSD.h"
 
-#include <X11/extensions/shape.h>
-
 #include <QDebug>
-#include <QEasingCurve>
-#include <QPropertyAnimation>
-#include <QHash>
 #include <QGraphicsScene>
 #include <QRect>
-#include <QApplication>
 #include <QDesktopWidget>
 #include <KDE/Plasma/Theme>
 #include <KDE/Plasma/PaintUtils>
@@ -80,12 +74,16 @@ ActivityChangedOSD::~ActivityChangedOSD()
 
 void ActivityChangedOSD::reconfigure()
 {
-    m_show = false;
-    m_delayTime = 1000;
+    m_smallView = true;
+    m_show = true;
+    m_delayTime = 3000;
 }
 
 void ActivityChangedOSD::activityChanged(const QString& id)
 {
+    if (!m_show)
+        return;
+
     if (m_active) {
         resize();
         update();
@@ -128,8 +126,10 @@ void ActivityChangedOSD::resize()
 
     float width = screenRect.width() * 0.1f;
     float height = screenRect.height() * 0.1f;
-    
-    QRect r = fontMetrics().boundingRect(m_activityman->ActivityName(m_activityman->CurrentActivity()));
+
+    QRect r = fontMetrics().boundingRect(
+                  m_activityman->ActivityName(m_activityman->CurrentActivity())
+              );
     height = 32 + top + bottom;
     width = r.width() + 32 + left + right + 4.0f + 2.0f;
 
@@ -189,12 +189,12 @@ QRectF ActivityChangedText::boundingRect() const
 void ActivityChangedText::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     painter->setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
-    
+
     KIcon icon = KIcon(m_activityman->ActivityIcon(m_activityman->CurrentActivity()));
     icon.paint(painter, 0, 0, 32, 32);
-    
+
     painter->drawText(32.0f + 4.0f, 32.0f - (boundingRect().height() / 2.0f)
-                , m_activityman->ActivityName(m_activityman->CurrentActivity()));
+                      , m_activityman->ActivityName(m_activityman->CurrentActivity()));
 //     painter->drawText(boundingRect()
 //                       , Qt::AlignCenter | Qt:: AlignVCenter
 //                       , m_activityman->ActivityName(m_activityman->CurrentActivity()));
