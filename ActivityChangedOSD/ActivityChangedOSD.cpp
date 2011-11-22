@@ -116,22 +116,19 @@ void ActivityChangedOSD::drawBackground(QPainter* painter, const QRectF& rect)
 void ActivityChangedOSD::resize()
 {
     const int screenId = qApp->desktop()->screenNumber(this);
-    QRect screenRect = qApp->desktop()->availableGeometry(screenId);
+    const QRect screenRect = qApp->desktop()->availableGeometry(screenId);
 
     qreal left, top, right, bottom;
     m_frame.getMargins(left, top, right, bottom);
-
-    float itemWidth = screenRect.width() * 0.1f;
-    float itemHeight = screenRect.height() * 0.1f;
-
-    float width = screenRect.width() * 0.1f;
-    float height = screenRect.height() * 0.1f;
+    
+    float width = 0.0f;
+    float height = 0.0f;
 
     QRect r = fontMetrics().boundingRect(
                   m_activityman->ActivityName(m_activityman->CurrentActivity())
               );
-    height = 32 + top + bottom;
-    width = r.width() + 32 + left + right + 4.0f + 2.0f;
+    height = 32.0f + top + bottom + 4.0f;
+    width = r.width() + 32 + left + right + 16.0f;
 
     QRect rect = QRect(screenRect.x() + (screenRect.width() - width) / 2,
                        screenRect.y() + (screenRect.height() - height) / 2,
@@ -149,17 +146,11 @@ void ActivityChangedOSD::resize()
         // do not trim to mask with compositing enabled, otherwise shadows are cropped
         setMask(m_frame.mask());
     }
-
-    m_item_frame.setElementPrefix("normal");
-    m_item_frame.resizeFrame(QSize(itemWidth, itemHeight));
-    m_item_frame.setElementPrefix("hover");
-    m_item_frame.resizeFrame(QSize(itemWidth, itemHeight));
-
+    
     foreach (QGraphicsItem * it, m_scene->items()) {
         ActivityChangedText* text = qgraphicsitem_cast<ActivityChangedText*>(it);
         if (text) {
-            text->setPos(left, top);
-            text->setHeight(r.height() + top);
+            text->setPos(32.0f / 2.0f, 32.0f / 2.0f);
         }
     }
 }
@@ -193,9 +184,6 @@ void ActivityChangedText::paint(QPainter* painter, const QStyleOptionGraphicsIte
     KIcon icon = KIcon(m_activityman->ActivityIcon(m_activityman->CurrentActivity()));
     icon.paint(painter, 0, 0, 32, 32);
 
-    painter->drawText(32.0f + 4.0f, 32.0f - (boundingRect().height() / 2.0f)
-                      , m_activityman->ActivityName(m_activityman->CurrentActivity()));
-//     painter->drawText(boundingRect()
-//                       , Qt::AlignCenter | Qt:: AlignVCenter
-//                       , m_activityman->ActivityName(m_activityman->CurrentActivity()));
+    painter->drawText(32.0f + 4.0f, (32.0f / 2.0f) - (boundingRect().height() / 2.0f) , m_activityman->ActivityName(m_activityman->CurrentActivity()));
 }
+

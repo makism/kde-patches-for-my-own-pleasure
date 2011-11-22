@@ -73,6 +73,7 @@ public:
     inline Plasma::FrameSvg* itemFrame() {
         return &m_item_frame;
     };
+    
     inline int& getDelayTime() {
         return m_delayTime;
     };
