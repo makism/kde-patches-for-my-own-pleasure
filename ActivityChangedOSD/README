@@ -4,7 +4,6 @@ ActivityChangedOSD
 	This is code in testing, needs much more loving.
 *****************************************************************
 
-* For the time being, only the Activity's name is shown.
 * The code is mostly based on KWin's OSD and KRunner's Quicksand interface.
 
 See kde bugs:
