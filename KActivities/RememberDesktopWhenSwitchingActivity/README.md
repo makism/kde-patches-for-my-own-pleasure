@@ -1,5 +1,5 @@
 #RememberDesktopWhenSwitchingActivity#
-_This is different approach when compared to the KDE-4.7 patch._
+####This is different approach when compared to the KDE-4.7 patch: KConfigGroup is no loger used####
 ---
 
 See kde bugs:
