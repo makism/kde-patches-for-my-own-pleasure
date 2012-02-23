@@ -1,11 +1,13 @@
---- kde-runtime-4.7.0.orig/activitymanager/ActivityManager_p.h	2011-05-20 23:32:25.000000000 +0300
-+++ kde-runtime-4.7.0/activitymanager/ActivityManager_p.h	2011-08-15 16:04:18.000000000 +0300
-@@ -77,6 +77,7 @@ public:
- public:
-     void initConifg();
- 
-+    KConfigGroup activitiesDesktopsConfig();
-     KConfigGroup activitiesConfig();
-     KConfigGroup mainConfig();
-     QString activityName(const QString & id);
-
+*** kactivities-4.8.0/service/ActivityManager_p.h	Thu Feb 23 21:21:56 2012
+--- kactivities-4.8.0.orig/service/ActivityManager_p.h	Fri Dec  2 23:16:56 2011
+***************
+*** 75,82 ****
+  
+      QHash < WId, SharedInfo::WindowData > & windows;
+      QHash < KUrl, SharedInfo::ResourceData > & resources;
+-     
+-     QHash < QString, int > activitiesDesktops;
+  
+  public:
+      void initConifg();
+--- 75,80 ----
