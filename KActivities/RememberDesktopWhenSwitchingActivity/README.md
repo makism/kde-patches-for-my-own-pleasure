@@ -16,6 +16,6 @@ The problem is as follows:
 4.  Change to Desktop 1.
 5.  Go back to activity A and (by default) to Desktop 1, while it should move you to Desktop 4 (this is where my patch kicks in).
   
-Apply patches to: **kdelibs/kactivities/service/**
+Apply patches to: **kactivities/service/**
 
 Kill and restart kactivitymanagerd
