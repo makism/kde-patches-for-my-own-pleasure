@@ -1,0 +1,62 @@
+*** kde-workspace-4.8.0.orig/kwin/workspace.h	Wed Jan 18 22:08:42 2012
+--- kde-workspace-4.8.0/kwin/workspace.h	Sun Mar  4 09:40:46 2012
+***************
+*** 253,263 ****
+--- 253,274 ----
+       * @returns The ID of the current desktop.
+       */
+      int currentDesktop() const;
++         
+      /**
+       * Set the current desktop to @a current.
+       * @returns True on success, false otherwise.
+       */
+      bool setCurrentDesktop(int current);
++     
++     /**
++      * @returns the ID of the previous desktop.
++      */
++     int previousDesktop() const;
++     
++     /**
++      * 
++      */
++     bool setPreviousDesktop(int current);
+  
+      /**
+       * Generate a desktop layout from EWMH _NET_DESKTOP_LAYOUT property parameters.
+***************
+*** 304,309 ****
+--- 315,321 ----
+      QSize desktopGridSize_;
+      int* desktopGrid_;
+      int currentDesktop_;
++     int previousDesktop_;
+      QString activity_;
+      QStringList allActivities_;
+  
+***************
+*** 549,554 ****
+--- 561,568 ----
+      void slotSwitchDesktopLeft();
+      void slotSwitchDesktopUp();
+      void slotSwitchDesktopDown();
++     
++     void slotToggleBetweenDesktops();
+  
+      void slotSwitchToDesktop();
+      //void slotSwitchToWindow( int );
+***************
+*** 1000,1005 ****
+--- 1014,1024 ----
+      return currentDesktop_;
+  }
+  
++ inline int Workspace::previousDesktop() const
++ {
++     return previousDesktop_;
++ }
++ 
+  inline int Workspace::desktopAtCoords(QPoint coords) const
+  {
+      return desktopGrid_[coords.y() * desktopGridSize_.width() + coords.x()];

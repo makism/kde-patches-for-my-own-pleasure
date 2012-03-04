@@ -1,0 +1,13 @@
+*** kde-workspace-4.8.0.orig/kwin/kwinbindings.cpp	Wed Jan 18 22:08:41 2012
+--- kde-workspace-4.8.0/kwin/kwinbindings.cpp	Sun Mar  4 09:57:20 2012
+***************
+*** 157,162 ****
+--- 157,164 ----
+  DEF(I18N_NOOP("Window One Desktop Up"),            0, slotWindowToDesktopUp());
+  DEF(I18N_NOOP("Window One Desktop Down"),          0, slotWindowToDesktopDown());
+  
++ DEF(I18N_NOOP("Toggle Between Desktops"),          0, slotToggleBetweenDesktops());
++ 
+  for (int i = 0; i < 8; ++i) {
+      DEF3(I18N_NOOP("Window to Screen %1"),         0, slotWindowToScreen(), i);
+  }

@@ -1,0 +1,16 @@
+*** kde-workspace-4.8.0.orig/kwin/useractions.cpp	Wed Jan 18 22:08:42 2012
+--- kde-workspace-4.8.0/kwin/useractions.cpp	Sun Mar  4 09:55:19 2012
+***************
+*** 1108,1113 ****
+--- 1108,1118 ----
+      setCurrentDesktop(desktop);
+  }
+  
++ void Workspace::slotToggleBetweenDesktops()
++ {
++     setCurrentDesktop(previousDesktop_);
++ }
++ 
+  static int senderValue(QObject *sender)
+  {
+      QAction *act = qobject_cast<QAction*>(sender);
