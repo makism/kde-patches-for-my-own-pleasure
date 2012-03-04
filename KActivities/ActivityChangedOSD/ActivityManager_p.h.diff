@@ -1,0 +1,23 @@
+*** kactivities-4.8.0.orig/service/ActivityManager_p.h	Fri Dec  2 23:16:56 2011
+--- kactivities-4.8.0/service/ActivityManager_p.h	Sun Mar  4 11:15:09 2012
+***************
+*** 29,34 ****
+--- 29,35 ----
+  #include <KUrl>
+  
+  #include "ActivityManager.h"
++ #include "ActivityChangedOSD.h"
+  #include "Event.h"
+  #include "SharedInfo.h"
+  #include "config-features.h"
+***************
+*** 82,87 ****
+--- 83,90 ----
+      KConfigGroup activitiesConfig();
+      KConfigGroup mainConfig();
+      QString activityName(const QString & id);
++     
++     ActivityChangedOSD* activity_changed_osd;
+  
+  #ifdef HAVE_NEPOMUK
+      Nepomuk::Resource activityResource(const QString & id);

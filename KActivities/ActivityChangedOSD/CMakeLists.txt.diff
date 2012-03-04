@@ -1,0 +1,22 @@
+*** kactivities-4.8.0.orig/service/CMakeLists.txt	Tue Dec 20 19:49:44 2011
+--- kactivities-4.8.0/service/CMakeLists.txt	Sun Mar  4 11:22:33 2012
+***************
+*** 60,65 ****
+--- 60,66 ----
+  
+  set(activity_manager_SRCS
+      ActivityManager.cpp
++     ActivityChangedOSD.cpp
+      EventProcessor.cpp
+      Plugin.cpp
+      Event.cpp
+***************
+*** 79,84 ****
+--- 80,86 ----
+      activity-manager
+      ${KDE4_KDECORE_LIBS}
+      ${KDE4_KDEUI_LIBS}
++     ${KDE4_PLASMA_LIBS}
+      ${ADDITIONAL_LINK_LIBS}
+      )
+  
