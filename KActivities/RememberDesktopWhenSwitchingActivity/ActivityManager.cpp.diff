@@ -1,11 +1,11 @@
-*** kactivities-4.8.0.orig/service/ActivityManager.cpp	Tue Dec 20 19:49:44 2011
---- kactivities-4.8.0/service/ActivityManager.cpp	Fri Mar  9 19:58:05 2012
+*** kactivities-4.8.1.orig/service/ActivityManager.cpp	Tue Dec 20 19:49:44 2011
+--- kactivities-4.8.1/service/ActivityManager.cpp	Mon Mar 12 19:37:56 2012
 ***************
 *** 273,278 ****
 --- 273,280 ----
           //         );
           // }
-  
+          
 +         activitiesDesktops[currentActivity] = KWindowSystem::currentDesktop();
 + 
           q->StartActivity(id);
@@ -20,7 +20,7 @@
 +     
 +     if (activitiesDesktops.contains(id)) {
 +         int desktopId = activitiesDesktops[id];
-+         
++     
 +         if (desktopId <= KWindowSystem::numberOfDesktops())
 +             KWindowSystem::setCurrentDesktop(desktopId);
 +     }
