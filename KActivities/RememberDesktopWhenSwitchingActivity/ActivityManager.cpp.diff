@@ -1,5 +1,5 @@
 *** kactivities-4.8.1.orig/service/ActivityManager.cpp	Tue Dec 20 19:49:44 2011
---- kactivities-4.8.1/service/ActivityManager.cpp	Wed Mar 14 21:13:10 2012
+--- kactivities-4.8.1/service/ActivityManager.cpp	Wed Mar 14 21:24:22 2012
 ***************
 *** 113,118 ****
 --- 113,122 ----
@@ -14,23 +14,8 @@
   
       currentActivity = mainConfig().readEntry("currentActivity", QString());
 ***************
-*** 130,135 ****
---- 134,145 ----
-                                                             QDBusServiceWatcher::WatchForRegistration);
-      connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(sessionServiceRegistered()));
-      sessionServiceRegistered();
-+ /*
-+     int switchToDesktop = activitiesDesktops[currentActivity];
-+     if (switchToDesktop <= KWindowSystem::numberOfDesktops())
-+         KWindowSystem::setCurrentDesktop(switchToDesktop);
-+     else
-+         activitiesDesktops[currentActivity] = KWindowSystem::currentDesktop();*/
-  }
-  
-  void ActivityManagerPrivate::sessionServiceRegistered()
-***************
 *** 226,231 ****
---- 236,246 ----
+--- 230,240 ----
       return KConfigGroup(&config, "main");
   }
   
@@ -44,7 +29,7 @@
       QStringList runningActivities = q->ListActivities(ActivityManager::Running);
 ***************
 *** 273,278 ****
---- 288,296 ----
+--- 282,290 ----
           //         );
           // }
   
@@ -56,7 +41,7 @@
           currentActivity = id;
 ***************
 *** 284,289 ****
---- 302,315 ----
+--- 296,309 ----
       // kDebug() << (void*) SharedInfo::self() << "Rankings << shared info";
       SharedInfo::self()->setCurrentActivity(id);
       emit q->CurrentActivityChanged(id);
