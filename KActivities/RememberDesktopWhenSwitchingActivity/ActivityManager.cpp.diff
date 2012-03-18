@@ -1,21 +1,8 @@
 *** kactivities-4.8.1.orig/service/ActivityManager.cpp	Tue Dec 20 19:49:44 2011
---- kactivities-4.8.1/service/ActivityManager.cpp	Fri Mar 16 13:58:39 2012
-***************
-*** 113,118 ****
---- 113,122 ----
-          }
-      }
-  
-+     foreach (const QString & activity, activitiesDesktopsConfig().keyList()) {
-+         activitiesDesktops[activity] = activitiesDesktopsConfig().readEntry(activity).toInt();
-+     }
-+ 
-      syncActivitiesWithNepomuk();
-  
-      currentActivity = mainConfig().readEntry("currentActivity", QString());
+--- kactivities-4.8.1/service/ActivityManager.cpp	Sun Mar 18 11:13:59 2012
 ***************
 *** 226,231 ****
---- 230,240 ----
+--- 226,236 ----
       return KConfigGroup(&config, "main");
   }
   
@@ -29,11 +16,10 @@
       QStringList runningActivities = q->ListActivities(ActivityManager::Running);
 ***************
 *** 273,278 ****
---- 282,290 ----
+--- 278,285 ----
           //         );
           // }
   
-+         activitiesDesktops[currentActivity] = KWindowSystem::currentDesktop();
 +         activitiesDesktopsConfig().writeEntry(currentActivity, QString::number(KWindowSystem::currentDesktop()));
 + 
           q->StartActivity(id);
@@ -41,17 +27,16 @@
           currentActivity = id;
 ***************
 *** 284,289 ****
---- 296,310 ----
+--- 291,304 ----
       // kDebug() << (void*) SharedInfo::self() << "Rankings << shared info";
       SharedInfo::self()->setCurrentActivity(id);
       emit q->CurrentActivityChanged(id);
 + 
-+     if (activitiesDesktops.contains(id)) {
-+         int desktopId = activitiesDesktops[id];
++     if (activitiesDesktopsConfig().hasKey(id)) {
++         int desktopId = activitiesDesktopsConfig().readEntry(id).toInt();
 + 
-+         if (desktopId <= KWindowSystem::numberOfDesktops() && desktopId >= 0) {
++         if (desktopId <= KWindowSystem::numberOfDesktops() && desktopId >= 0)
 +             KWindowSystem::setCurrentDesktop(desktopId);
-+         }
 +     }
 + 
       return true;

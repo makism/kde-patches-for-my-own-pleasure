@@ -1,13 +1,8 @@
 *** kactivities-4.8.1.orig/service/ActivityManager_p.h	Fri Dec  2 23:16:56 2011
---- kactivities-4.8.1/service/ActivityManager_p.h	Wed Mar 14 18:40:18 2012
+--- kactivities-4.8.1/service/ActivityManager_p.h	Sun Mar 18 10:59:12 2012
 ***************
-*** 76,84 ****
---- 76,87 ----
-      QHash < WId, SharedInfo::WindowData > & windows;
-      QHash < KUrl, SharedInfo::ResourceData > & resources;
-  
-+     QHash < QString, int > activitiesDesktops;
-+ 
+*** 79,84 ****
+--- 79,85 ----
   public:
       void initConifg();
   
