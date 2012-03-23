@@ -1,0 +1,11 @@
+--- kde-workspace-4.8.1.orig/plasma/desktop/shell/activitymanager/activitymanager.cpp	2012-03-03 00:11:07.000000000 +0200
++++ kde-workspace-4.8.1/plasma/desktop/shell/activitymanager/activitymanager.cpp	2012-03-23 21:13:36.000000000 +0200
+@@ -228,7 +228,7 @@
+ {
+     Q_UNUSED(event);
+     qDebug() << "ActivityManager::focusInEvent()";
+-    QTimer::singleShot(300, d->filteringWidget, SLOT(setFocus())); 
++    d->activityList->grabKeyboard();
+ }
+ 
+ #include "activitymanager.moc"

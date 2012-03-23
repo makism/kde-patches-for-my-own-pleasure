@@ -1,0 +1,45 @@
+--- kde-workspace-4.8.1.orig/plasma/desktop/shell/activitymanager/activitylist.cpp	2012-03-03 00:11:07.000000000 +0200
++++ kde-workspace-4.8.1/plasma/desktop/shell/activitymanager/activitylist.cpp	2012-03-23 19:44:59.000000000 +0200
+@@ -205,3 +205,42 @@
+     }
+ }
+ 
++void ActivityList::keyPressEvent(QKeyEvent *event)
++{
++    int keyCode = Qt::Key_unknown;
++    int activityIdx = -1;
++
++    if (event->count() == 1) {
++        keyCode = event->key();
++
++        // Find a more elegant way for this.
++        switch (keyCode) {
++        case Qt::Key_1: activityIdx = 0; break;
++        case Qt::Key_2: activityIdx = 1; break;
++        case Qt::Key_3: activityIdx = 2; break;
++        case Qt::Key_4: activityIdx = 3; break;
++        case Qt::Key_5: activityIdx = 4; break;
++        case Qt::Key_6: activityIdx = 5; break;
++        case Qt::Key_7: activityIdx = 6; break;
++        case Qt::Key_8: activityIdx = 7; break;
++        case Qt::Key_9: activityIdx = 8; break;
++        case Qt::Key_0: activityIdx = 9; break;
++        default: break;
++        }
++
++        // Just to request activity.
++        if (activityIdx != -1) {
++            event->accept();
++
++            if (activityIdx < m_activityController->listActivities().size()) {
++                const QString activityId = m_activityController->listActivities().at(activityIdx);
++                m_activityController->setCurrentActivity(activityId);
++            }
++
++            return;
++        }
++    }
++
++    event->ignore();
++}
++

@@ -1,0 +1,10 @@
+--- kde-workspace-4.8.1.orig/plasma/desktop/shell/activitymanager/activitylist.h	2012-03-03 00:11:07.000000000 +0200
++++ kde-workspace-4.8.1/plasma/desktop/shell/activitymanager/activitylist.h	2012-03-23 19:23:20.000000000 +0200
+@@ -43,6 +43,7 @@
+     ~ActivityList();
+ 
+ protected:
++    void keyPressEvent(QKeyEvent *event);
+     void updateVisibleIcons();
+     void setSearch(const QString &searchString);
+ 
